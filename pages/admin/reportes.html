@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reportes - Panel de Administración</title>
+    <link rel="stylesheet" href="../../estilos/estilosadmin/styles.css">
+    <link rel="stylesheet" href="../../estilos/estilosadmin/reportes.css">
+</head>
+
+<body>
+    <div class="sidebar">
+        <h2>Admin Panel</h2>
+        <nav>
+            <ul>
+                <li><a href="admin.html">Inicio</a></li>
+                <li><a href="clientes.html">Clientes</a></li>
+                <li><a href="proyectos.html">Proyectos</a></li>
+                <li><a href="presupuestos.html">Presupuestos</a></li>
+                <li><a href="calendario.html">Calendario</a></li>
+                <li><a href="reportes.html">Reportes</a></li>
+                <li><a href="../landing/index.html">Cerrar sesion</a></li>
+            </ul>
+        </nav>
+    </div>
+    <div class="content">
+        <header>
+            <h1>Reportes Generales</h1>
+        </header>
+        <section id="reports">
+            <h2>Datos Generales</h2>
+            <p>Genera reportes sobre clientes, proyectos y presupuestos.</p>
+            <button id="generate-report-btn">Generar Reporte</button>
+            <div id="report-output"></div>
+        </section>
+    </div>
+    <script src="jsadmin/reportes.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proyectos - Panel de Administración</title>
+    <link rel="stylesheet" href="../../estilos/estilosadmin/styles.css">
+    <link rel="stylesheet" href="../../estilos/estilosadmin/proyectos.css">
+</head>
+
+<body>
+    <div class="sidebar">
+        <h2>Admin Panel</h2>
+        <nav>
+            <ul>
+                <li><a href="admin.html">Inicio</a></li>
+                <li><a href="clientes.html">Clientes</a></li>
+                <li><a href="proyectos.html">Proyectos</a></li>
+                <li><a href="presupuestos.html">Presupuestos</a></li>
+                <li><a href="calendario.html">Calendario</a></li>
+                <li><a href="reportes.html">Reportes</a></li>
+                <li><a href="../landing/index.html">Cerrar sesion</a></li>
+            </ul>
+        </nav>
+    </div>
+    <div class="content">
+        <header>
+            <h1>Gestión de Proyectos</h1>
+        </header>
+        <section id="projects">
+            <h2>Proyectos Actuales</h2>
+            <button id="add-project-btn">Agregar Proyecto</button>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nombre del Proyecto</th>
+                        <th>Cliente</th>
+                        <th>Estado</th>
+                        <th>Fecha de Inicio</th>
+                        <th>Fecha de Finalización</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody id="project-list">
+                    <!-- Dinámico -->
+                </tbody>
+            </table>
+        </section>
+    </div>
+    <script src="jsadmin/proyectos.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,150 @@
+/* General styles */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f9;
+    color: #333;
+  }
+  
+  /* Header */
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    background-color: #4CAF50;
+    color: white;
+  }
+  
+  .header .logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+  
+  .header .header-right {
+    display: flex;
+    align-items: center;
+  }
+  
+  .header .notification-btn {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.2rem;
+    margin-right: 1rem;
+    cursor: pointer;
+  }
+  
+  .header .user-profile {
+    background: white;
+    color: #4CAF50;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+  }
+  
+  /* Dashboard layout */
+  .dashboard {
+    display: flex;
+  }
+  
+  /* Sidebar */
+  .sidebar {
+    width: 250px;
+    background-color: #333;
+    color: white;
+    padding: 1rem;
+    min-height: 100vh;
+  }
+  
+  .sidebar h2 {
+    text-align: center;
+    margin-bottom: 1rem;
+  }
+  
+  .sidebar ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .sidebar ul li {
+    margin: 1rem 0;
+  }
+  
+  .sidebar ul li a {
+    text-decoration: none;
+    color: white;
+    font-size: 1rem;
+    display: block;
+    padding: 0.5rem;
+    border-radius: 5px;
+  }
+  
+  .sidebar ul li a:hover {
+    color: #000000;
+  }
+  
+  .user-info {
+    padding: 20px;
+    text-align: center;
+    border-top: 1px solid #7f8c8d;
+  }
+  
+  .user-info p {
+    margin: 0;
+    font-size: 14px;
+  }
+  
+  .user-info .logout {
+    display: block;
+    margin-top: 10px;
+    color: #e74c3c;
+    text-decoration: none;
+  }
+  
+  .user-info .logout:hover {
+    text-decoration: underline;
+  }
+
+  .user-info {
+    padding: 20px;
+    text-align: center;
+    border-top: 1px solid #7f8c8d;
+    background-color: #2c3e50;
+  }
+  .user-info p {
+    margin: 0;
+    font-size: 14px;
+  }
+  
+  .user-info .logout {
+    display: block;
+    margin-top: 10px;
+    color: #e74c3c;
+    text-decoration: none;
+  }
+  
+  .user-info .logout:hover {
+    text-decoration: underline;
+  }
+
+  .user-info {
+    text-align: center;
+    padding: 15px;
+    background-color: #34495e;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    color: #ecf0f1;
+}
+
+.user-info .user-avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-bottom: 10px;
+    border: 2px solid #ecf0f1;
+}
+
+.user-info p {
+    margin: 0;
+    font-size: 14px;
+}

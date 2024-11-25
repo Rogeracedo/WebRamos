@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contacto - Ramos Drywall</title>
+    <link rel="stylesheet" href="../../estilos/contacto.css">
+    <link rel="shortcut icon" href="../imagenes/logo.jpg" type="image/x-icon" />
+</head>
+
+<body>
+    <header>
+        <a href="index.html">
+            <img src="../../imagenes/logo.jpg" alt="Imagen de la constructora" />
+        </a>
+        <h1>Constructora Ramos Drywall</h1>
+        <nav>
+            <ul>
+                <li><a href="index.html">Inicio</a></li>
+                <li><a href="servicios.html">Servicios</a></li>
+                <li><a href="proyectos.html">Proyectos</a></li>
+                <li><a href="contacto.html">Contacto</a></li>
+                <li><a href="inventario.html">Inventario</a></li>
+                <li><a href="login.html">Login</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="contact-section">
+            <div class="form-container">
+                <h2>Contacto</h2>
+                <h3>Contáctanos</h3>
+                <p><strong>Celular:</strong> +51 928474093</p>
+                <p><strong>Correo:</strong> ramosdrywall@gmail.com</p>
+            </div>
+
+            <div class="form-container">
+                <form id="formulario-contacto">
+                    <label for="p_nombre">Nombre</label>
+                    <input type="text" name="p_nombre" id="p_nombre" placeholder="nombre" required>
+
+                    <label for="p_apellido">Apellidos</label>
+                    <input type="text" name="p_apellido" id="p_apellido" placeholder="apellido" required>
+
+                    <label for="p_telefono">Teléfono</label>
+                    <input type="tel" name="p_telefono" id="p_telefono" placeholder="telefono" required>
+
+                    <label for="p_direccion">Dirección</label>
+                    <input type="text" name="p_direccion" id="p_direccion" placeholder="dirección" required>
+
+                    <label for="p_email">Correo electrónico</label>
+                    <input type="email" name="p_email" id="p_email" placeholder="Correo Electrónico" required>
+
+                    <label for="p_comentarios">Caracteristicas del proyecto</label>
+                    <textarea name="p_comentarios" id="p_comentarios" cols="30" rows="5"
+                        placeholder="Escribe tu mensaje..."></textarea>
+
+                    <label for="file">Subir documento</label>
+                    <input type="file" name="file" id="file" accept=".pdf,.doc,.docx,.jpg,.png">
+
+                    <div class="form-text">
+                        <a href="#">Política de privacidad</a>
+                        <a href="#">Términos de condición</a>
+                    </div>
+
+                    <input class="btn" type="submit" value="Enviar">
+                </form>
+            </div>
+
+            <div class="map-container">
+                <h3>Ubícanos</h3>
+                <p>Av. 28 de Julio Nro. 8, Cusco-Perú</p>
+                <iframe src="https://www.google.com/maps/embed?pb=..." width="400" height="300" style="border:0;"
+                    allowfullscreen="" loading="lazy"></iframe>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Constructora Ramos Drywall. Todos los derechos reservados.</p>
+    </footer>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+    <script type="module" src="../../js/contacto.js"></script>
+</body>
+
+</html>
