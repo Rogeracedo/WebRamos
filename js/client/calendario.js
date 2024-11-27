@@ -1,52 +1,80 @@
 document.addEventListener("DOMContentLoaded", () => {
-    const calendarBody = document.getElementById("calendar-body");
-    const monthYear = document.getElementById("month-year");
-    const prevMonth = document.getElementById("prev-month");
-    const nextMonth = document.getElementById("next-month");
+  const calendarBody = document.getElementById("calendar-body");
+  const monthYear = document.getElementById("month-year");
+  const prevMonth = document.getElementById("prev-month");
+  const nextMonth = document.getElementById("next-month");
 
-    let currentDate = new Date();
+  let currentDate = new Date();
 
-    const renderCalendar = (date) => {
-        calendarBody.innerHTML = "";
+  let dates = [1, 2, 3, 4, 9, 11];
 
-        const firstDay = new Date(date.getFullYear(), date.getMonth(), 1).getDay();
-        const daysInMonth = new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate();
-        const monthNames = [
-            "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
-            "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre",
-        ];
+  const renderCalendar = (date) => {
+    calendarBody.innerHTML = "";
 
-        monthYear.textContent = `${monthNames[date.getMonth()]} ${date.getFullYear()}`;
+    const firstDay = new Date(date.getFullYear(), date.getMonth(), 1).getDay();
+    const daysInMonth = new Date(
+      date.getFullYear(),
+      date.getMonth() + 1,
+      0
+    ).getDate();
+    const monthNames = [
+      "Enero",
+      "Febrero",
+      "Marzo",
+      "Abril",
+      "Mayo",
+      "Junio",
+      "Julio",
+      "Agosto",
+      "Septiembre",
+      "Octubre",
+      "Noviembre",
+      "Diciembre",
+    ];
 
-        let day = 1;
-        for (let i = 0; i < 6; i++) {
-            const row = document.createElement("tr");
+    monthYear.textContent = `${
+      monthNames[date.getMonth()]
+    } ${date.getFullYear()}`;
 
-            for (let j = 0; j < 7; j++) {
-                const cell = document.createElement("td");
+    let day = 1;
+    for (let i = 0; i < 6; i++) {
+      const row = document.createElement("tr");
 
-                if ((i === 0 && j < (firstDay || 7) - 1) || day > daysInMonth) {
-                    cell.textContent = "";
-                } else {
-                    cell.textContent = day;
-                    day++;
-                }
-                row.appendChild(cell);
+      for (let j = 0; j < 7; j++) {
+        const cell = document.createElement("td");
+
+        if ((i === 0 && j < (firstDay || 7) - 1) || day > daysInMonth) {
+          cell.textContent = "";
+        } else {
+          cell.textContent = day;
+          day++;
+          for (let date of dates) {
+            if (date === day) {
+              cell.textContent = "Evento";
+              dates.splice(1, 1);
+              cell.innerHTML = "";
+              cell.addEventListener("click", () => {
+                cell.innerHTML += "<br><div> Nuevo evento</div>";
+              });
             }
-
-            calendarBody.appendChild(row);
+          }
         }
-    };
+        row.appendChild(cell);
+      }
 
-    prevMonth.addEventListener("click", () => {
-        currentDate.setMonth(currentDate.getMonth() - 1);
-        renderCalendar(currentDate);
-    });
+      calendarBody.appendChild(row);
+    }
+  };
 
-    nextMonth.addEventListener("click", () => {
-        currentDate.setMonth(currentDate.getMonth() + 1);
-        renderCalendar(currentDate);
-    });
-
+  prevMonth.addEventListener("click", () => {
+    currentDate.setMonth(currentDate.getMonth() - 1);
     renderCalendar(currentDate);
+  });
+
+  nextMonth.addEventListener("click", () => {
+    currentDate.setMonth(currentDate.getMonth() + 1);
+    renderCalendar(currentDate);
+  });
+
+  renderCalendar(currentDate);
 });

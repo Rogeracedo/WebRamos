@@ -1,3 +1,36 @@
+<?php
+
+include_once("../../models/Conexion.php");
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+  $usuario = $_POST["email"];
+  $cn = new Conexion();
+  $con = $cn->getConnection();
+
+  try {
+    $query = "SELECT * FROM credenciales WHERE usuario = ?";
+    $stmt = mysqli_prepare($con, $query);
+    if (!$stmt) {
+      throw new Exception('Error revisar conexion.');
+    }
+    mysqli_stmt_bind_param($stmt, "s", $usuario);
+    mysqli_stmt_execute($stmt);
+    $result = mysqli_stmt_get_result($stmt);
+    if ($row = mysqli_fetch_assoc($result)) {
+      if ($row["rol"] == "2") {
+        header("Location: ../client/index.html");
+      } else {
+        header("Location: ../admin/admin.html");
+      }
+    }
+    mysqli_stmt_close($stmt);
+    return $usuarioBuscado;
+  } catch (Exception $e) {
+    return null;
+  }
+}
+?>
+
 <!DOCTYPE html>
 <html lang="es">
 
@@ -25,13 +58,13 @@
         <li><a href="proyectos.html">Proyectos</a></li>
         <li><a href="contacto.html">Contacto</a></li>
         <li><a href="inventario.html">Inventario</a></li>
-        <li><a href="login.html">Login</a></li>
+        <li><a href="login.php">Login</a></li>
       </ul>
     </nav>
   </header>
   <main>
     <div>
-      <form id="loginForm">
+      <form action="login.php" method="post" id="loginForm">
         <!-- Email input -->
         <div class="form-outline mb-4">
           <input type="email" id="email" class="form-control" name="email" />
@@ -77,7 +110,7 @@
     integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
     crossorigin="anonymous"></script>
 
-  <script src="../../js/app.js"></script>
+  <!-- <script src="../../js/app.js"></script> -->
 </body>
 
 </html>
