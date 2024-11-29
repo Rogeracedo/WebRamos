@@ -8,7 +8,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $con = $cn->getConnection();
 
   try {
-    $query = "SELECT * FROM `credenciales` c inner join cliente cl on cl.idcredenciales=c.idcredenciales where usuario = ?";
+    $query = "SELECT * FROM `credenciales` where usuario = ?";
     $stmt = mysqli_prepare($con, $query);
     if (!$stmt) {
       throw new Exception('Error revisar conexion.');
@@ -18,11 +18,37 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $result = mysqli_stmt_get_result($stmt);
     if ($row = mysqli_fetch_assoc($result)) {
       if ($row["rol"] == "2") {
-        session_start();
-        $_SESSION["idCliente"] = $row["ID_Cliente"];
-        header("Location: ../client/presupuestos.php");
-      } else {
-        header("Location: ../admin/admin.html");
+        $query = "SELECT * FROM `credenciales` c inner join cliente cl on cl.idcredenciales=c.idcredenciales where usuario = ?";
+        $stmt = mysqli_prepare($con, $query);
+        if (!$stmt) {
+          throw new Exception('Error revisar conexion.');
+        }
+        mysqli_stmt_bind_param($stmt, "s", $usuario);
+        mysqli_stmt_execute($stmt);
+        $result = mysqli_stmt_get_result($stmt);
+        if ($row = mysqli_fetch_assoc($result)) {
+          session_start();
+          $_SESSION["idCliente"] = $row["ID_Cliente"];
+          $_SESSION["rol"] = $row["ID_Cliente"] == 2 ? "Cliente" : "Asesor";
+          $_SESSION["nombre"] = $row["Nombre"];
+          $_SESSION["apellido"] = $row["Apellido"];
+          header("Location: ../client/presupuestos.php");
+        }
+      } else if ($row["rol"] == "1") {
+        $query = "SELECT * FROM `credenciales` where usuario = ?";
+        $stmt = mysqli_prepare($con, $query);
+        if (!$stmt) {
+          throw new Exception('Error revisar conexion.');
+        }
+        mysqli_stmt_bind_param($stmt, "s", $usuario);
+        mysqli_stmt_execute($stmt);
+        $result = mysqli_stmt_get_result($stmt);
+        if ($row = mysqli_fetch_assoc($result)) {
+          session_start();
+          $_SESSION["idCliente"] = $row["ID_Asesor"];
+          $_SESSION["rol"] = "Admin";
+          header("Location: ../admin/admin.php");
+        }
       }
     }
     mysqli_stmt_close($stmt);

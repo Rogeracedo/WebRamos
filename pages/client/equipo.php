@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -11,27 +14,7 @@
 
 <body>
   <div class="main-container">
-    <!-- Barra lateral -->
-    <div class="sidebar">
-      <h2>Panel Usuario</h2>
-      <div class="user-info">
-        <img src="../../imagenes/descarga.png" alt="User Avatar" class="user-avatar">
-        <p>Usuario: <span id="username">NombreUsuario</span></p>
-      </div>
-      <nav>
-        <ul>
-          <li><a href="informaciom.html">🏗 Proyecto</a></li>
-          <li><a href="estadodelproy.html">📊 Estado del proyecto</a></li>
-          <li><a href="calendario.html">📅 Calendario</a></li>
-          <li><a href="presupuestos.html">💰 Presupuestos</a></li>
-          <li><a href="planos.html">📁 Planos y archivos</a></li>
-          <li><a href="equipo.html">👷 Equipo de trabajo</a></li>
-          <li><a href="comentarios.html">💬 Comentarios</a></li>
-          <li><a href="../landing/index.html">🔓 Cerrar sesión</a></li>
-        </ul>
-      </nav>
-    </div>
-
+    <?php include_once("../plantilla/navbar-cliente.php") ?>
     <!-- Contenido principal -->
     <div class="team-container">
       <h2>Equipo de trabajo</h2>

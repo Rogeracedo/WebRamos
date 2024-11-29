@@ -1,3 +1,33 @@
+<?php
+include_once("../../models/Conexion.php");
+session_start();
+$cn = new Conexion();
+$con = $cn->getConnection();
+$id = 1;
+
+try {
+    $dataRespuesta = array();
+    $query = "SELECT * FROM cliente where ?";
+    $stmt = mysqli_prepare($con, $query);
+    if (!$stmt) {
+        throw new Exception('Error revisar conexion.');
+    }
+    mysqli_stmt_bind_param($stmt, "i", $id);
+    mysqli_stmt_execute($stmt);
+    $result = mysqli_stmt_get_result($stmt);
+    while ($row = mysqli_fetch_assoc($result)) {
+        $dataRespuesta[] = array(
+            'nombre' => $row["Nombre"],
+            'correo' => $row["Email"]
+        );
+    }
+    mysqli_stmt_close($stmt);
+} catch (Exception $e) {
+    return null;
+}
+?>
+
+?>
 <!DOCTYPE html>
 <html lang="es">
 
@@ -10,25 +40,11 @@
 </head>
 
 <body>
-    <div class="sidebar">
-        <h2>Admin Panel</h2>
-        <nav>
-            <ul>
-                <li><a href="admin.html">Inicio</a></li>
-                <li><a href="clientes.html">Clientes</a></li>
-                <li><a href="proyectos.html">Proyectos</a></li>
-                <li><a href="presupuestos.html">Presupuestos</a></li>
-                <li><a href="calendario.html">Calendario</a></li>
-                <li><a href="reportes.html">Reportes</a></li>
-                <li><a href="../landing/index.html">Cerrar sesión</a></li>
-            </ul>
-        </nav>
-    </div>
+    <?php include_once("../plantilla/navbar-asesor.php") ?>
     <div class="content">
         <header>
             <h1>Bienvenido al Panel de Administración</h1>
         </header>
-
         <!-- Modal para agregar/editar clientes -->
         <div id="client-form-modal" class="modal">
             <div class="modal-content">
@@ -69,14 +85,29 @@
                     </tr>
                 </thead>
                 <tbody id="clients-table">
-                    <!-- Dinámico -->
+                    <?php
+                    foreach ($dataRespuesta as $data):
+                    ?>
+                        <tr>
+                            <td><?php echo $data["nombre"] ?></td>
+                            <td><?php echo $data["correo"] ?></td>
+                            <td>${client.telefono}</td>
+                            <td><input type="text" class="estado-proyecto" data-id="${client.id}" value="${client.estadoProyecto}" /></td>
+                            <td>
+                                <button class="btn-edit" data-id="${client.id}">Editar</button>
+                                <button class="btn-delete" data-id="${client.id}">Eliminar</button>
+                            </td>
+                        </tr>
+                    <?php
+                    endforeach;
+                    ?>
                 </tbody>
             </table>
         </section>
 
     </div>
 
-    <script src="jsadmin/clientes.js"></script>
+    <!-- <script src="../../estilos/jsadmin/clientes.js"></script> -->
 </body>
 
 </html>

@@ -1,3 +1,5 @@
+<?php
+session_start(); ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -10,20 +12,7 @@
 </head>
 
 <body>
-    <div class="sidebar">
-        <h2>Admin Panel</h2>
-        <nav>
-            <ul>
-                <li><a href="admin.html">Inicio</a></li>
-                <li><a href="clientes.html">Clientes</a></li>
-                <li><a href="proyectos.html">Proyectos</a></li>
-                <li><a href="presupuestos.html">Presupuestos</a></li>
-                <li><a href="calendario.html">Calendario</a></li>
-                <li><a href="reportes.html">Reportes</a></li>
-                <li><a href="../landing/index.html">Cerrar sesion</a></li>
-            </ul>
-        </nav>
-    </div>
+    <?php include_once("../plantilla/navbar-asesor.php") ?>
     <div class="content">
         <header>
             <h1>Reportes Generales</h1>
