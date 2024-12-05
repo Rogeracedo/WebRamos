@@ -1,5 +1,8 @@
 <?php
 session_start();
+if (!isset($_SESSION["idCliente"]) || $_SESSION["rol"] != "Cliente") {
+  header("Location: ../landing/index.php");
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">

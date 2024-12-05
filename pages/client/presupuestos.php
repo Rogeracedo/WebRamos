@@ -1,13 +1,15 @@
 <?php
-
 include_once("../../models/Conexion.php");
 session_start();
+if (!isset($_SESSION["idCliente"]) || $_SESSION["rol"] != "Cliente") {
+    header("Location: ../landing/index.php");
+}
 $cn = new Conexion();
 $con = $cn->getConnection();
 
 try {
     $dataRespuesta = array();
-    $query = "SELECT * FROM proyecto p inner join presupuesto pr on pr.ID_Presupuesto=p.idpresupuesto where idcliente = ?";
+    $query = "SELECT * FROM proyecto p inner join presupuesto pr on pr.ID_Presupuesto=p.idpresupuesto where idcliente = ? order by p.idproyecto desc";
     $stmt = mysqli_prepare($con, $query);
     if (!$stmt) {
         throw new Exception('Error revisar conexion.');
@@ -18,7 +20,6 @@ try {
     while ($row = mysqli_fetch_assoc($result)) {
         $dataRespuesta[] = array(
             'idpresupuesto' => $row["ID_Presupuesto"],
-            'idservicio' => $row["ID_Servicio"],
             'monto' => $row["Monto_Total"],
             'fecha' => $row["Fecha_Creacion"],
             'detalle' => $row["Detalle"],
@@ -41,16 +42,20 @@ try {
     <title>Calendario - Panel de Administración</title>
     <link rel="stylesheet" href="../../estilos/estiloscliente/styles.css">
     <link rel="stylesheet" href="../../estilos/estiloscliente/presupuesto.css">
+    <link rel="shortcut icon" href="/WebRamos/imagenes/favicon.png" type="image/x-icon">
 </head>
 
 <body>
     <div class="main-container">
         <?php include_once("../plantilla/navbar-cliente.php") ?>
         <section class="container budget">
-            <h2>Presupuestos</h2>
+            <?php if (count($dataRespuesta) == 0) {
+                echo '<p>Aún no tienes presupuestos. Solicita alguno en el menu "Nuevo Proyecto".</p>';
+            } ?>
             <?php
             foreach ($dataRespuesta as $data):
             ?>
+                <h2><?php echo $data['nombre'] ?> - Presupuesto</h2>
                 <div class="budget-cards">
                     <div class="budget-card">
                         <div class="budget-header">

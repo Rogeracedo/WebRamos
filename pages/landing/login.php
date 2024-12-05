@@ -1,9 +1,20 @@
 <?php
-
 include_once("../../models/Conexion.php");
-
+session_start();
+if (isset($_SESSION["rol"])) {
+  if ($_SESSION["rol"] == "Cliente") {
+    header("Location: ../client/index.php");
+    exit();
+  } else {
+    header("Location: ../admin/admin.php");
+    exit();
+  }
+}
+session_unset();
+session_destroy();
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $usuario = $_POST["email"];
+  $password = $_POST["password"];
   $cn = new Conexion();
   $con = $cn->getConnection();
 
@@ -27,12 +38,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         mysqli_stmt_execute($stmt);
         $result = mysqli_stmt_get_result($stmt);
         if ($row = mysqli_fetch_assoc($result)) {
+          if ($row["password"] != $_POST["password"]) {
+            header("Location: login.php?fail");
+            exit();
+          }
           session_start();
           $_SESSION["idCliente"] = $row["ID_Cliente"];
-          $_SESSION["rol"] = $row["ID_Cliente"] == 2 ? "Cliente" : "Asesor";
+          $_SESSION["rol"] =  "Cliente";
           $_SESSION["nombre"] = $row["Nombre"];
           $_SESSION["apellido"] = $row["Apellido"];
-          header("Location: ../client/presupuestos.php");
+          header("Location: ../client/informacion.php");
         }
       } else if ($row["rol"] == "1") {
         $query = "SELECT * FROM `credenciales` where usuario = ?";
@@ -44,12 +59,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         mysqli_stmt_execute($stmt);
         $result = mysqli_stmt_get_result($stmt);
         if ($row = mysqli_fetch_assoc($result)) {
+          if ($row["password"] != $_POST["password"]) {
+            header("Location: login.php?fail");
+            exit();
+          }
           session_start();
-          $_SESSION["idCliente"] = $row["ID_Asesor"];
+          $_SESSION["usuario"] = $row["usuario"];
           $_SESSION["rol"] = "Admin";
           header("Location: ../admin/admin.php");
         }
       }
+    } else {
+      header("Location: login.php?fail");
+      exit();
     }
     mysqli_stmt_close($stmt);
   } catch (Exception $e) {
@@ -91,7 +113,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   </header>
   <main>
     <div>
-      <form action="login.php" method="post" id="loginForm">
+      <?php
+      if (isset($_GET["fail"]))
+        echo '<div class="error-message">Error: Credenciales incorrectas!</div>';
+      ?><form action="login.php" method="post" id="loginForm">
         <!-- Email input -->
         <div class="form-outline mb-4">
           <input type="email" id="email" class="form-control" name="email" />

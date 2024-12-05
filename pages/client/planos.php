@@ -1,13 +1,16 @@
 <?php
 include_once("../../models/Conexion.php");
 session_start();
+if (!isset($_SESSION["idCliente"]) || $_SESSION["rol"] != "Cliente") {
+    header("Location: ../landing/index.php");
+}
 $cn = new Conexion();
 $con = $cn->getConnection();
-$id = 1;
+$id = $_GET["proyecto"];
 
 try {
     $dataRespuesta = array();
-    $query = "SELECT * FROM documento where idproyecto = ?";
+    $query = "SELECT p.*,d.*,d.nombre as nombredoc FROM `proyecto` p join documento d on p.idproyecto = d.idproyecto where p.idproyecto = ?;";
     $stmt = mysqli_prepare($con, $query);
     if (!$stmt) {
         throw new Exception('Error revisar conexion.');
@@ -18,10 +21,11 @@ try {
     while ($row = mysqli_fetch_assoc($result)) {
         $dataRespuesta[] = array(
             'iddocumento' => $row["iddocumento"],
-            'nombre' => $row["nombre"],
+            'nombre' => $row["nombredoc"],
             'tipo' => $row["tipo"],
             'idproyecto' => $row["idproyecto"],
-            'url' => $row["url"]
+            'url' => $row["url"],
+            'proyecto' => $row["nombre"]
         );
     }
     mysqli_stmt_close($stmt);
@@ -40,54 +44,33 @@ try {
     <title>Calendario - Panel de Administración</title>
     <link rel="stylesheet" href="../../estilos/estiloscliente/styles.css">
     <link rel="stylesheet" href="../../estilos/estiloscliente/planos.css">
-    <link rel="stylesheet" href="/WebRamos/imagenes/depa22.jpg">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
 </head>
 
 <body>
     <div class="main-container">
-    <?php include_once("../plantilla/navbar-cliente.php") ?>
+        <?php include_once("../plantilla/navbar-cliente.php") ?>
         <!-- Contenido principal -->
-        <section class="container planos-archivos">
-            <h2>Planos y Archivos</h2>
-            <?php
-            foreach ($dataRespuesta as $data):
-            ?>
-                <div class="planos-cards">
+        <div class="planos-cards">
+            <section class="container planos-archivos">
+                <?php
+                foreach ($dataRespuesta as $data):
+                ?>
                     <div class="planos-card">
                         <div class="planos-header">
-                            <span>Plano Arquitectónico</span>
+                            <span><?php echo ($data['tipo'] == 1) ? "Plano Arquitectónico" : (($data['tipo'] == 2) ? "Plano Eléctrico" : " Documento del Proyecto"); ?></span>
                         </div>
                         <div class="planos-body">
                             <?php
                             echo $data['nombre'];
                             ?>
-                            <a download href="<?php echo $data['url']; ?>"  class="download-button">
-                                <i class="fas fa-download"></i> Descargar PDF
-                            </a>
+                            <a download href="<?php echo $data['url']; ?>" class="download-button">
+                                <i class="fas fa-download"></i>Descargar</a>
                         </div>
                     </div>
-                    <!-- <div class="planos-card">
-                        <div class="planos-header">
-                            <span>Planos Eléctricos</span>
-                        </div>
-                        <div class="planos-body">
-                            <a href="/archivos/plano-electrico.pdf" target="_blank" class="download-button">
-                                <i class="fas fa-download"></i> Descargar PDF
-                            </a>
-                        </div>
-                    </div>
-                    <div class="planos-card">
-                        <div class="planos-header">
-                            <span>Documentos del Proyecto</span>
-                        </div>
-                        <div class="planos-body">
-                            <a href="/archivos/documentos-proyecto.zip" target="_blank" class="download-button">
-                                <i class="fas fa-download"></i> Descargar Archivos
-                            </a>
-                        </div>
-                    </div> -->
-                </div>
-            <?php
-            endforeach; ?>
-        </section>
+                <?php
+                endforeach; ?>
+            </section>
+        </div>
+    </div>
 </body>

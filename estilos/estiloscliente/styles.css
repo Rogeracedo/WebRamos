@@ -148,3 +148,26 @@ body {
     margin: 0;
     font-size: 14px;
 }
+
+
+.error-message {
+  border-radius: 10px;
+  background-color: rgb(221, 80, 80);
+  border-style: solid;
+  border-color: rgb(192, 2, 2);
+  font-size: 1.3em;
+  margin-bottom: 1.4em;
+  padding: 4px 2px;
+  color: white;
+}
+
+.success-message {
+  border-radius: 10px;
+  background-color: rgb(126, 247, 102);
+  border-style: solid;
+  border-color: rgb(31, 197, 9);
+  font-size: 1.3em;
+  margin-bottom: 1.4em;
+  padding: 4px 2px;
+  color: white;
+}

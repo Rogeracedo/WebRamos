@@ -1,5 +1,9 @@
 <?php
-session_start(); ?>
+session_start();
+if (!isset($_SESSION["rol"]) ||  $_SESSION["rol"] != "Admin") {
+    header("Location: ../landing/index.php");
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 

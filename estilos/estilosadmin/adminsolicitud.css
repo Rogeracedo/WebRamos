@@ -1,0 +1,257 @@
+/* General styles */
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f9;
+  color: #333;
+  display: flex;
+}
+
+/* Sidebar */
+.sidebar {
+  width: 250px;
+  background-color: #333;
+  color: white;
+  padding: 1rem;
+  min-height: 100vh;
+  flex-shrink: 0; /* Asegura que la barra lateral no colapse */
+}
+
+.sidebar h2 {
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+label {
+  font-weight: bold;
+}
+
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+}
+
+.sidebar ul li {
+  margin: 1rem 0;
+}
+
+.sidebar ul li a {
+  text-decoration: none;
+  color: white;
+  font-size: 1rem;
+  display: block;
+  padding: 0.5rem;
+  border-radius: 5px;
+}
+
+.sidebar ul li a:hover {
+  color: #000000;
+}
+
+/* User Info */
+.user-info {
+  text-align: center;
+  padding: 15px;
+  background-color: #34495e;
+  border-radius: 5px;
+  margin-bottom: 20px;
+  color: #ecf0f1;
+}
+
+.user-info .user-avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  margin-bottom: 10px;
+  border: 2px solid #ecf0f1;
+}
+
+.user-info p {
+  margin: 0;
+  font-size: 14px;
+}
+
+/* Content */
+.content {
+  flex-grow: 1; /* Ocupa el resto del espacio disponible */
+  background: #f4f4f9;
+  padding: 2rem;
+  overflow: auto;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+main,
+.project-info {
+  padding: 20px;
+  text-align: center;
+}
+
+/* Modal content */
+.modal-content {
+  background: white;
+  width: 100%;
+  max-width: 500px; /* Ancho máximo del modal */
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.25); /* Sombra para realce */
+  text-align: center;
+}
+
+.modal-content h1 {
+  margin-bottom: 20px;
+  font-size: 24px;
+  font-weight: bold;
+  color: #333;
+}
+
+.modal-content form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.modal-content input,
+.modal-content textarea,
+.modal-content button,
+.modal-content select {
+  width: 100%;
+  padding: 12px;
+  font-size: 16px;
+  border: 1px solid #b0b0b0;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.modal-content input:focus,
+.modal-content textarea:focus,
+.modal-content select:focus {
+  border-color: #e3b5a7;
+  outline: none;
+}
+
+.modal-content button {
+  background-color: #a7e3b2;
+  color: black;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  padding: 15px 25px;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.modal-content button:hover {
+  background-color: #ff7043;
+  transform: scale(1.05);
+}
+
+/* Modal buttons */
+.modal-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.accept-btn,
+.reject-btn {
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  font-weight: bold;
+}
+
+/* Aceptar: botón azul */
+.accept-btn {
+  background-color: #007bff !important; /* Azul */
+  color: white !important;
+  border: none;
+}
+
+.accept-btn:hover {
+  background-color: #0056b3 !important; /* Azul más oscuro */
+}
+
+/* Rechazar: botón rojo */
+.reject-btn {
+  background-color: #f44336 !important; /* Rojo */
+  color: white !important;
+  border: none;
+}
+
+.reject-btn:hover {
+  background-color: #e53935 !important; /* Rojo más oscuro */
+}
+
+/* Main container */
+.main-container {
+  display: flex;
+  width: 100%;
+}
+
+/* Select */
+select {
+  width: 100%;
+  padding: 12px;
+  font-size: 16px;
+  border: 1px solid #b0b0b0;
+  border-radius: 8px;
+  outline: none;
+  transition: border-color 0.3s ease;
+  background-color: white;
+  color: #555;
+}
+
+select:focus {
+  border-color: #ff7043;
+}
+
+/* Textarea */
+textarea {
+  resize: vertical;
+}
+
+/* Centrar el modal en el área derecha */
+.content {
+  position: relative; /* Necesario para posicionar el modal dentro de este contenedor */
+  flex-grow: 1;
+  background: #f4f4f9;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh; /* Para que ocupe toda la altura */
+  padding: 1rem;
+  box-sizing: border-box;
+}
+
+/* Modal centrado */
+.modal-content {
+  background: white;
+  width: 100%;
+  max-width: 800px; /* Ancho máximo del modal */
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.25); /* Sombra para realce */
+  text-align: center;
+}
+
+.content,
+.modal-container {
+  position: relative; /* Permite posicionar elementos dentro del contenedor */
+  flex-grow: 1; /* Ocupa el espacio disponible */
+  display: flex;
+  justify-content: center; /* Centrar horizontalmente */
+  align-items: center; /* Centrar verticalmente */
+  min-height: 100vh; /* Altura completa de la ventana */
+  padding: 1rem;
+  background-color: #f4f4f9; /* Fondo claro */
+  box-sizing: border-box;
+}
+
+.client-info {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}

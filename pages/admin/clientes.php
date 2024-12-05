@@ -1,27 +1,28 @@
 <?php
 include_once("../../models/Conexion.php");
 session_start();
+if (!isset($_SESSION["rol"]) ||  $_SESSION["rol"] != "Admin") {
+    header("Location: ../landing/index.php");
+}
 $cn = new Conexion();
 $con = $cn->getConnection();
-$id = 1;
 
 try {
     $dataRespuesta = array();
-    $query = "SELECT * FROM cliente where ?";
-    $stmt = mysqli_prepare($con, $query);
-    if (!$stmt) {
-        throw new Exception('Error revisar conexion.');
+    $query = "SELECT * FROM cliente";
+    $result = mysqli_query($con, $query);
+    if (!$result) {
+        throw new Exception('Error en la consulta: ' . mysqli_error($con));
     }
-    mysqli_stmt_bind_param($stmt, "i", $id);
-    mysqli_stmt_execute($stmt);
-    $result = mysqli_stmt_get_result($stmt);
     while ($row = mysqli_fetch_assoc($result)) {
         $dataRespuesta[] = array(
+            'id' => $row["ID_Cliente"],
             'nombre' => $row["Nombre"],
-            'correo' => $row["Email"]
+            'apellido' => $row["Apellido"],
+            'correo' => $row["Email"],
+            'telefono' => $row["Telefono"]
         );
     }
-    mysqli_stmt_close($stmt);
 } catch (Exception $e) {
     return null;
 }
@@ -46,7 +47,7 @@ try {
             <h1>Bienvenido al Panel de Administración</h1>
         </header>
         <!-- Modal para agregar/editar clientes -->
-        <div id="client-form-modal" class="modal">
+        <!-- <div id="client-form-modal" class="modal">
             <div class="modal-content">
                 <span id="close-modal-btn" class="close">&times;</span>
                 <h3>Formulario de Cliente</h3>
@@ -67,13 +68,13 @@ try {
                     <button type="submit">Guardar</button>
                 </form>
             </div>
-        </div>
+        </div> -->
 
         <!-- Clientes -->
         <section id="clients">
             <h2>Clientes</h2>
-            <button id="add-client-btn">Agregar Cliente</button>
-            <button id="refresh-btn">Actualizar Tabla</button>
+            <!-- <button id="add-client-btn">Agregar Cliente</button>
+            <button id="refresh-btn">Actualizar Tabla</button> -->
             <table>
                 <thead>
                     <tr>
@@ -89,13 +90,13 @@ try {
                     foreach ($dataRespuesta as $data):
                     ?>
                         <tr>
-                            <td><?php echo $data["nombre"] ?></td>
+                            <td><?php echo $data["nombre"] . " " . $data["apellido"] ?></td>
                             <td><?php echo $data["correo"] ?></td>
-                            <td>${client.telefono}</td>
-                            <td><input type="text" class="estado-proyecto" data-id="${client.id}" value="${client.estadoProyecto}" /></td>
+                            <td><?php echo $data["telefono"] ?></td>
+                            <td><button id="add-client-btn" onclick="abrirDetalle(<?php echo $data['id'] ?>)">Ver proyectos</button></td>
                             <td>
-                                <button class="btn-edit" data-id="${client.id}">Editar</button>
-                                <button class="btn-delete" data-id="${client.id}">Eliminar</button>
+                                <button class="btn-edit" data-id="${client.id}">Ver</button>
+                                <!--  <button class="btn-delete" data-id="${client.id}">Eliminar</button>-->
                             </td>
                         </tr>
                     <?php

@@ -1,58 +1,117 @@
-/* Configuración general */
 body {
-  font-family: Arial, sans-serif;
+  font-family: "Arial", sans-serif;
   margin: 0;
   padding: 0;
-  display: flex;
-  min-height: 100vh;
+  background-color: #f9f9fb;
+  color: #333;
 }
 
-h1 {
-  font-size: 2rem;
-  margin-bottom: 1rem;
+.container {
+  max-width: 900px;
+  margin: 20px auto;
+  padding: 20px;
 }
 
-/* Contenedor principal */
-.main-container {
-  display: flex;
-  width: 100%;
-}
-
-/* Barra lateral */
-.sidebar {
-  width: 250px;
-  background: #333;
-  color: white;
-  padding: 1rem;
-  display: flex;
-  flex-direction: column;
-  align-items: start;
-}
-
-.sidebar h2 {
-  font-size: 1.5rem;
-  margin-bottom: 1rem;
+.title {
   text-align: center;
+  margin-bottom: 30px;
+  font-size: 28px;
+  color: #4caf50;
 }
 
-.sidebar ul {
-  list-style: none;
-  padding: 0;
+.card {
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  margin-bottom: 20px;
 }
 
-.sidebar ul li {
-  margin-bottom: 1rem;
+.card-title {
+  font-size: 20px;
+  margin-bottom: 15px;
+  color: #333;
+  border-bottom: 2px solid #4caf50;
+  padding-bottom: 5px;
 }
 
-.sidebar ul li a {
-  text-decoration: none;
+.info-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+
+.info-grid p {
+  font-size: 16px;
+  margin: 5px 0;
+}
+
+.info-grid span {
+  font-weight: bold;
+  color: #555;
+}
+
+.input-group {
+  margin-bottom: 15px;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+  font-size: 14px;
+}
+
+input,
+select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 14px;
+}
+
+button {
+  display: inline-block;
+  padding: 10px 20px;
+  font-size: 14px;
+  font-weight: bold;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.primary-button {
+  background-color: #4caf50;
   color: white;
-  font-size: 1rem;
+  margin-right: 10px;
 }
 
-.sidebar ul li a:hover {
-  color: #000000;
+.secondary-button {
+  background-color: #007bff;
+  color: white;
 }
+
+.finalize-button {
+  background-color: #008cba;
+  color: white;
+  margin-right: 10px;
+}
+
+.cancel-button {
+  background-color: #f44336;
+  color: white;
+}
+
+button:hover {
+  opacity: 0.9;
+}
+
+.card label {
+  color: black;
+}
+
+
 
 .planos-archivos {
   background-color: #f7f9fc;
@@ -106,8 +165,8 @@ h1 {
 .planos-body {
   padding: 20px;
   background-color: #f9f9f9;
+  color: black;
 }
-
 .download-button {
   display: inline-flex;
   align-items: center;
@@ -172,7 +231,6 @@ h1 {
   color: red;
   font-weight: bold;
 }
-
 
 /* Estilo para la sección de Total */
 .total-container {

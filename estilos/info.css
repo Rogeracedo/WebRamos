@@ -1,0 +1,151 @@
+.new-project-button {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.new-project-button button {
+  background-color: #5b5f5b; /* Verde suave */
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  font-size: 18px;
+  font-weight: bold;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.new-project-button button:hover {
+  background-color: #000000;
+  transform: scale(1.05);
+}
+
+/* Estilo del modal */
+.modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  animation: fadeIn 0.3s ease-out;
+}
+
+/* Animación de entrada */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.modal-content {
+  background: #f1f1f1;
+  padding: 30px;
+  border-radius: 15px;
+  width: 90%;
+  max-width: 600px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  animation: slideUp 0.3s ease-out;
+}
+
+/* Animación de deslizamiento hacia arriba */
+@keyframes slideUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.modal-content h1 {
+  margin-bottom: 20px;
+  font-size: 24px;
+  font-weight: bold;
+  color: #333;
+}
+
+.modal-content form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.modal-content input,
+.modal-content textarea,
+.modal-content button,
+.modal-content select {
+  width: 100%;
+  padding: 12px;
+  font-size: 16px;
+  border: 1px solid #b0b0b0;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.modal-content input:focus,
+.modal-content textarea:focus,
+.modal-content select:focus {
+  border-color: #e3b5a7;
+  outline: none;
+}
+
+.modal-content button {
+  background-color: #e3b5a7;
+  color: black;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  padding: 15px 25px;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.modal-content button:hover {
+  background-color: #ff7043;
+  transform: scale(1.05);
+}
+
+.close-button {
+  background: none;
+  border: none;
+  font-size: 22px;
+  color: #555;
+  cursor: pointer;
+  margin-left: auto;
+  transition: color 0.3s ease;
+}
+
+.close-button:hover {
+  color: #4caf50;
+}
+
+select {
+  width: 100%;
+  padding: 12px;
+  font-size: 16px;
+  border: 1px solid #b0b0b0;
+  border-radius: 8px;
+  outline: none;
+  transition: border-color 0.3s ease;
+  background-color: white;
+  color: #555;
+}
+
+select:focus {
+  border-color: #ff7043;
+}
+
+textarea {
+  resize: vertical;
+}
