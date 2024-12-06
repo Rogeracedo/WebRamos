@@ -56,7 +56,9 @@ try {
             ?>
             <?php foreach ($dataRespuesta as $data): ?>
                 <section class="project-details">
-                    <h3 style="margin-bottom: 0;"><?php echo $data['nombre'] ?> - <?php echo ($data['estado'] == 1) ? "Pendiente Aprobación"  : (($data['estado'] == 2) ? "En Progreso"  : (($data['estado'] == 3) ? "Finalizado"  : (($data['estado'] == 4) ? "Rechazado" : "Cancelado"))); ?></h3>
+                    <a href="detalle.php?proyecto=<?php echo $data["id"] ?>">
+                        <h3 style="margin-bottom: 0;"><?php echo $data['nombre'] ?> - <?php echo ($data['estado'] == 1) ? "Pendiente Aprobación"  : (($data['estado'] == 2) ? "En Progreso"  : (($data['estado'] == 3) ? "Finalizado"  : (($data['estado'] == 4) ? "Rechazado" : "Cancelado"))); ?></h3>
+                    </a>
                     <div class="status">
                         <div class="progress-bar">
                             <span>Progreso General: <?php echo $data["progreso"]; ?>%</span>

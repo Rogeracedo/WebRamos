@@ -4,6 +4,18 @@
   font-family: sans-serif;
 }
 
+.success-message {
+  border-radius: 10px;
+  background-color: rgb(126, 247, 102);
+  border-style: solid;
+  border-color: rgb(31, 197, 9);
+  font-size: 1.3em;
+  margin-bottom: 1.4em;
+  padding: 4px 2px;
+  color: white;
+}
+
+
 header {
   background-color: #333;
   color: white;

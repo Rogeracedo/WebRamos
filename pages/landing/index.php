@@ -12,14 +12,14 @@
 <body>
     <header>
 
-        <a href="index.html">
+        <a href="index.php">
             <img src="../../imagenes/logo.jpg" alt="Imagen de la constructora" />
         </a>
 
         <h1>Constructora Ramos Drywall</h1>
         <nav>
             <ul>
-                <li><a href="index.html">Inicio</a></li>
+                <li><a href="index.php">Inicio</a></li>
                 <li><a href="servicios.html">Servicios</a></li>
                 <li><a href="proyectos.html">Proyectos</a></li>
                 <li><a href="contacto.html">Contacto</a></li>

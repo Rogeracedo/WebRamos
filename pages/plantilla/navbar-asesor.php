@@ -8,7 +8,6 @@
             <li><a href="proyectos.php">Proyectos</a></li>
             <li><a href="presupuestos.php">Presupuestos</a></li>
             <li><a href="calendario.php">Calendario</a></li>
-            <li><a href="reportes.php">Reportes</a></li>
             <li><a href="../plantilla/logout.php">Cerrar sesión</a></li>
         </ul>
     </nav>

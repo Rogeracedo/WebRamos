@@ -1,8 +1,34 @@
 <?php
+include_once("../../models/Conexion.php");
 session_start();
+
 if (!isset($_SESSION["idCliente"]) || $_SESSION["rol"] != "Cliente") {
     header("Location: ../landing/index.php");
 }
+
+$cn = new Conexion();
+$con = $cn->getConnection();
+$id = $_SESSION["idCliente"];
+
+try {
+    $dataRespuesta = array();
+    $query = "SELECT * from proyecto where idcliente = $id ;";
+    $result = mysqli_query($con, $query);
+    if (!$result) {
+        throw new Exception('Error en la consulta: ' . mysqli_error($con));
+    }
+    while ($row = mysqli_fetch_assoc($result)) {
+        $dataRespuesta[] = array(
+            'id' => $row["idproyecto"],
+            'nombre' => $row["nombre"],
+            'fin' => $row["fechaFin"],
+            'inicio' => $row["fechaInicio"]
+        );
+    }
+} catch (Exception $e) {
+    return null;
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -51,6 +77,130 @@ if (!isset($_SESSION["idCliente"]) || $_SESSION["rol"] != "Cliente") {
         </div>
     </div>
 </body>
-<script src="../../js/client/calendario.js"></script>
+<script>
+    function abrirDetalle(id) {
+        window.location.href = `detalle.php?proyecto=${id}`;
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+        const calendarBody = document.getElementById("calendar-body");
+        const monthYear = document.getElementById("month-year");
+        const prevMonth = document.getElementById("prev-month");
+        const nextMonth = document.getElementById("next-month");
+
+        let currentDate = new Date();
+        let eventos = [];
+        let inicio = ";"
+        let fin = "";
+
+        let evento = {};
+        <?php foreach ($dataRespuesta as $variable): ?>
+            evento = {
+                id: <?php echo json_encode($variable["id"]); ?>,
+                nombre: <?php echo json_encode($variable["nombre"]); ?>,
+                fechainicio: new Date("<?php echo $variable['inicio']; ?>"),
+                fechafin: new Date("<?php echo $variable['fin']; ?>")
+            };
+
+            evento.fechainicio.setHours(evento.fechainicio.getHours() + 5);
+            evento.fechafin.setHours(evento.fechafin.getHours() + 5);
+
+            eventos.push(evento);
+        <?php endforeach; ?>
+
+        // Verifica que las variables estén correctamente llenas
+        console.log(eventos);
+
+        const renderCalendar = (date) => {
+            calendarBody.innerHTML = "";
+
+            const firstDay = new Date(date.getFullYear(), date.getMonth(), 1).getDay();
+            const daysInMonth = new Date(
+                date.getFullYear(),
+                date.getMonth() + 1,
+                0
+            ).getDate();
+            const monthNames = [
+                "Enero",
+                "Febrero",
+                "Marzo",
+                "Abril",
+                "Mayo",
+                "Junio",
+                "Julio",
+                "Agosto",
+                "Septiembre",
+                "Octubre",
+                "Noviembre",
+                "Diciembre",
+            ];
+
+            monthYear.textContent = `${
+      monthNames[date.getMonth()]
+    } ${date.getFullYear()}`;
+
+            let day = 1;
+            for (let i = 0; i < 6; i++) {
+                const row = document.createElement("tr");
+
+                for (let j = 0; j < 7; j++) {
+                    const cell = document.createElement("td");
+
+                    if ((i === 0 && j < (firstDay || 7) - 1) || day > daysInMonth) {
+                        cell.textContent = "";
+                    } else {
+                        cell.textContent = day;
+                        for (let evento of eventos) {
+                            if (evento.fechainicio.getDate() == day && evento.fechainicio.getMonth() == currentDate.getMonth() &&
+                                evento.fechainicio.getFullYear() === date.getFullYear()) { // Asegúrate de que también coincida el mes
+                                let dia = day;
+                                if (!cell.innerHTML.includes(dia)) {
+                                    cell.innerHTML = dia + `<br>`;
+                                }
+
+                                // Crear el div para el evento
+                                let divEvento = document.createElement('div');
+                                divEvento.innerHTML = `${evento.nombre}`;
+
+                                // Estilos para el div
+                                divEvento.style.backgroundColor = 'blue';
+                                divEvento.style.color = 'white';
+                                divEvento.style.padding = '5px';
+                                divEvento.style.borderRadius = '10px';
+                                divEvento.style.marginTop = '5px';
+                                divEvento.style.cursor = 'pointer';
+
+                                // Asociar el evento con el id correspondiente
+                                divEvento.addEventListener("click", () => {
+                                    abrirDetalle(evento.id); // Usar el id correspondiente
+                                });
+
+                                // Añadir el div a la celda
+                                cell.appendChild(divEvento);
+
+                            }
+                        }
+                        day++;
+                    }
+                    row.appendChild(cell);
+                }
+
+                calendarBody.appendChild(row);
+            }
+        };
+
+        prevMonth.addEventListener("click", () => {
+            currentDate.setMonth(currentDate.getMonth() - 1);
+            renderCalendar(currentDate);
+        });
+
+        nextMonth.addEventListener("click", () => {
+            currentDate.setMonth(currentDate.getMonth() + 1);
+            renderCalendar(currentDate);
+        });
+
+        renderCalendar(currentDate);
+    });
+</script>
 
 </html>

@@ -180,7 +180,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     mkdir($directorioDestino, 0777, true);
                 }
                 $directorioDestino .= "/" . basename($nombreArchivo);
-                $rutaSQL = "/WeBramos/uploads/" . $id . "/" . $_POST['tipo_documento'];
+                $rutaSQL = "/WeBramos/uploads/" . $id . "/" . $_POST['tipo_documento'] ."/". $nombreArchivo;
                 try {
                     $query = "INSERT INTO `documento` (`nombre`, `tipo`, `idproyecto`, `url`) VALUES (?, ?, ?, ?)  ";
                     $stmt = mysqli_prepare($con, $query);

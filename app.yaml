@@ -1,0 +1,11 @@
+runtime: php82
+
+env_variables:
+  DB_USER: "root"
+  DB_PASSWORD: "WebRamosSQL"
+  DB_NAME: "webramos"
+  DB_HOST: "webramos1234:southamerica-west1:webramossql"
+
+handlers:
+  - url: /.*
+    script: pages/landing/index.php

@@ -96,13 +96,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <body>
   <header>
-    <a href="index.html">
+    <a href="index.php">
       <img src="../../imagenes/logo.jpg" alt="Imagen de la constructora" />
     </a>
     <h1>Constructora Ramos Drywall</h1>
     <nav>
       <ul>
-        <li><a href="index.html">Inicio</a></li>
+        <li><a href="index.php">Inicio</a></li>
         <li><a href="servicios.html">Servicios</a></li>
         <li><a href="proyectos.html">Proyectos</a></li>
         <li><a href="contacto.html">Contacto</a></li>
@@ -113,6 +113,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   </header>
   <main>
     <div>
+      <?php
+      if (isset($_GET["created"]))
+        echo '<div class="success-message">Cuenta creada exitosamente!</div>';
+      ?>
       <?php
       if (isset($_GET["fail"]))
         echo '<div class="error-message">Error: Credenciales incorrectas!</div>';
@@ -141,7 +145,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
           <div class="col">
             <!-- Simple link -->
-            <a href="#!">Recuperar contraseña?</a>
+            <a href="registro.php">Registrate aqui!</a>
           </div>
         </div>
 

@@ -62,6 +62,9 @@ try {
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['accion'])) {
         if ($_POST['accion'] === 'aceptar') {
+            if (isset($_POST["nombreProy"])) {
+                $_POST["nombreProy"] = "Proyecto Nuevo";
+            }
             try {
                 $query = "INSERT INTO `presupuesto` (`Monto_Total`, `Fecha_Creacion`, `Detalle`) VALUES (0, current_timestamp(), '') ;";
                 $stmt = mysqli_prepare($con, $query);
@@ -76,12 +79,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 return null;
             }
             try {
-                $query = "INSERT INTO `proyecto` (`nombre`, `progreso`, `estado`, `idcliente`, `idasesor`, `idpresupuesto`,`idServicio`) VALUES (? , 0, 2, ?, ?, ?, ?) ";
+                $query = "INSERT INTO `proyecto` (`nombre`, `progreso`, `estado`, `idcliente`,  `idpresupuesto`,`idServicio`) VALUES (? , 0, 2, ?, ?, ?) ";
                 $stmt = mysqli_prepare($con, $query);
                 if (!$stmt) {
                     throw new Exception('Error revisar conexion.');
                 }
-                mysqli_stmt_bind_param($stmt, "siiii", $_POST["nombreProy"], $_POST["idCliente"], $_POST["asesor"], $id, $_POST["servicio"]);
+                mysqli_stmt_bind_param($stmt, "siii", $_POST["nombreProy"], $_POST["idCliente"], $id, $_POST["servicio"]);
                 mysqli_stmt_execute($stmt);
                 mysqli_stmt_close($stmt);
             } catch (Exception $e) {
@@ -164,7 +167,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                         <!-- Campo de texto para el nombre del proyecto -->
                         <label for="project-name">Nombre del Proyecto</label>
-                        <input type="text" id="project-name" name="nombreProy" placeholder="Introduce el nombre del proyecto" required>
+                        <input type="text" id="project-name" name="nombreProy" placeholder="Introduce el nombre del proyecto">
 
                         <!-- Campo select para categoría del proyecto -->
                         <label for="project-category">Servicio</label>
@@ -172,13 +175,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             <option value=<?php echo $data["idservicio"] ?>><?php echo $data["servicio"] ?></option>
                         </select>
 
-                        <label for="project-category">Asesor</label>
-                        <select id="project-category" name="asesor" required>
-                            <option value="" disabled selected>Seleccione un asesor</option>
-                            <?php foreach ($dataSelect as $datasel): ?>
-                                <option value=<?php echo $datasel["id"] ?>><?php echo $datasel["nombre"] . " " . $datasel["apellido"] ?></option>
-                            <?php endforeach; ?>
-                        </select>
 
                         <!-- Campo para la descripción (solo lectura) -->
                         <label for="description">Comentario Cliente</label>

@@ -82,7 +82,6 @@ try {
                         <th>Correo</th>
                         <th>Teléfono</th>
                         <th>Estado del Proyecto</th>
-                        <th>Acciones</th>
                     </tr>
                 </thead>
                 <tbody id="clients-table">
@@ -93,11 +92,7 @@ try {
                             <td><?php echo $data["nombre"] . " " . $data["apellido"] ?></td>
                             <td><?php echo $data["correo"] ?></td>
                             <td><?php echo $data["telefono"] ?></td>
-                            <td><button id="add-client-btn" onclick="abrirDetalle(<?php echo $data['id'] ?>)">Ver proyectos</button></td>
-                            <td>
-                                <button class="btn-edit" data-id="${client.id}">Ver</button>
-                                <!--  <button class="btn-delete" data-id="${client.id}">Eliminar</button>-->
-                            </td>
+                            <td><button type="button" id="add-client-btn" onclick="abrirDetalle()">Ver proyectos</button></td>
                         </tr>
                     <?php
                     endforeach;
@@ -109,6 +104,11 @@ try {
     </div>
 
     <!-- <script src="../../estilos/jsadmin/clientes.js"></script> -->
+    <script defer>
+        function abrirDetalle() {
+            window.location= "proyectos.php";
+        }
+    </script>
 </body>
 
 </html>

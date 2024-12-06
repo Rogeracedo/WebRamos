@@ -6,6 +6,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   let currentDate = new Date();
 
+
   let dates = [1, 2, 3, 4, 9, 11];
 
   const renderCalendar = (date) => {
@@ -52,10 +53,7 @@ document.addEventListener("DOMContentLoaded", () => {
             if (date === day) {
               cell.textContent = "Evento";
               dates.splice(1, 1);
-              cell.innerHTML = "";
-              cell.addEventListener("click", () => {
-                cell.innerHTML += "<br><div> Nuevo evento</div>";
-              });
+              cell.innerHTML = date - 1 + `<br><div> ${nombre}</div>`;
             }
           }
         }
