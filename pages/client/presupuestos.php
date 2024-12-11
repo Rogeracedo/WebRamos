@@ -24,8 +24,7 @@ try {
             'fecha' => $row["Fecha_Creacion"],
             'detalle' => $row["Detalle"],
             'idproyecto' => $row["idproyecto"],
-            'nombre' => $row["nombre"],
-            'detalle' => $row["idasesor"]
+            'nombre' => $row["nombre"]
         );
     }
     mysqli_stmt_close($stmt);

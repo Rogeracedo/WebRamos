@@ -29,7 +29,8 @@ try {
                 'proyecto' => $row["nombre"],
                 'monto' => $row["Monto_Total"],
                 'estado' => $row["estado"],
-                'fecha' =>$row['fechaInicio']
+                'fecha' => $row['fechaInicio'],
+                'idProyecto' => $row['idproyecto']
             );
         }
     }
@@ -46,6 +47,7 @@ try {
     <title>Presupuestos - Panel de Administración</title>
     <link rel="stylesheet" href="../../estilos/estilosadmin/styles.css">
     <link rel="stylesheet" href="../../estilos/estilosadmin/presupuestos.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
 </head>
 
 <body>
@@ -56,7 +58,6 @@ try {
         </header>
         <section id="budgets">
             <h2>Presupuestos Registrados</h2>
-            <button id="add-budget-btn">Nuevo Presupuesto</button>
             <table>
                 <thead>
                     <tr>
@@ -77,8 +78,7 @@ try {
                             <td><?php echo ($data['estado'] == 1) ? "Pendiente Aprobación"  : (($data['estado'] == 2) ? "En Progreso"  : (($data['estado'] == 3) ? "Finalizado"  : (($data['estado'] == 4) ? "Rechazado" : "Cancelado"))); ?></td>
                             <td><?php echo $data["fecha"] ?></td>
                             <td>
-                                <button class="btn-edit">Editar</button>
-                                <button class="btn-delete">Eliminar</button>
+                                <button onclick="verDetalle(<?php echo $data['idProyecto']; ?>)" class="btn-edit"><i class="fa-solid fa-folder-open"></i></button>
                             </td>
                         </tr>
                     <?php endforeach; ?>
@@ -86,7 +86,11 @@ try {
             </table>
         </section>
     </div>
-    <!-- <script src="jsadmin/presupuestos.js"></script>-->
+    <script defer>
+        function verDetalle($id) {
+            location.href = `detalle.php?proyecto=${id}`;
+        }
+    </script>
 </body>
 
 </html>

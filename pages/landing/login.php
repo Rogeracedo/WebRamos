@@ -10,46 +10,20 @@ if (isset($_SESSION["rol"])) {
     exit();
   }
 }
+
+$cn = new Conexion();
+$con = $cn->getConnection();
+
 session_unset();
 session_destroy();
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-  $usuario = $_POST["email"];
-  $password = $_POST["password"];
-  $cn = new Conexion();
-  $con = $cn->getConnection();
 
-  try {
-    $query = "SELECT * FROM `credenciales` where usuario = ?";
-    $stmt = mysqli_prepare($con, $query);
-    if (!$stmt) {
-      throw new Exception('Error revisar conexion.');
-    }
-    mysqli_stmt_bind_param($stmt, "s", $usuario);
-    mysqli_stmt_execute($stmt);
-    $result = mysqli_stmt_get_result($stmt);
-    if ($row = mysqli_fetch_assoc($result)) {
-      if ($row["rol"] == "2") {
-        $query = "SELECT * FROM `credenciales` c inner join cliente cl on cl.idcredenciales=c.idcredenciales where usuario = ?";
-        $stmt = mysqli_prepare($con, $query);
-        if (!$stmt) {
-          throw new Exception('Error revisar conexion.');
-        }
-        mysqli_stmt_bind_param($stmt, "s", $usuario);
-        mysqli_stmt_execute($stmt);
-        $result = mysqli_stmt_get_result($stmt);
-        if ($row = mysqli_fetch_assoc($result)) {
-          if ($row["password"] != $_POST["password"]) {
-            header("Location: login.php?fail");
-            exit();
-          }
-          session_start();
-          $_SESSION["idCliente"] = $row["ID_Cliente"];
-          $_SESSION["rol"] =  "Cliente";
-          $_SESSION["nombre"] = $row["Nombre"];
-          $_SESSION["apellido"] = $row["Apellido"];
-          header("Location: ../client/informacion.php");
-        }
-      } else if ($row["rol"] == "1") {
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+  if (isset($_POST['accion'])) {
+    if ($_POST['accion'] == "login") {
+      $usuario = $_POST["correo"];
+      $password = $_POST["contrasena"];
+
+      try {
         $query = "SELECT * FROM `credenciales` where usuario = ?";
         $stmt = mysqli_prepare($con, $query);
         if (!$stmt) {
@@ -59,114 +33,215 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         mysqli_stmt_execute($stmt);
         $result = mysqli_stmt_get_result($stmt);
         if ($row = mysqli_fetch_assoc($result)) {
-          if ($row["password"] != $_POST["password"]) {
-            header("Location: login.php?fail");
-            exit();
+          if ($row["rol"] == "2") {
+            $query = "SELECT * FROM `credenciales` c inner join cliente cl on cl.idcredenciales=c.idcredenciales where usuario = ?";
+            $stmt = mysqli_prepare($con, $query);
+            if (!$stmt) {
+              throw new Exception('Error revisar conexion.');
+            }
+            mysqli_stmt_bind_param($stmt, "s", $usuario);
+            mysqli_stmt_execute($stmt);
+            $result = mysqli_stmt_get_result($stmt);
+            if ($row = mysqli_fetch_assoc($result)) {
+              if ($row["password"] != $_POST["contrasena"]) {
+                header("Location: login.php?fail");
+                exit();
+              }
+              session_start();
+              $_SESSION["idCliente"] = $row["ID_Cliente"];
+              $_SESSION["rol"] =  "Cliente";
+              $_SESSION["nombre"] = $row["Nombre"];
+              $_SESSION["apellido"] = $row["Apellido"];
+              header("Location: ../client/informacion.php");
+            }
+          } else if ($row["rol"] == "1") {
+            $query = "SELECT * FROM `credenciales` where usuario = ?";
+            $stmt = mysqli_prepare($con, $query);
+            if (!$stmt) {
+              throw new Exception('Error revisar conexion.');
+            }
+            mysqli_stmt_bind_param($stmt, "s", $usuario);
+            mysqli_stmt_execute($stmt);
+            $result = mysqli_stmt_get_result($stmt);
+            if ($row = mysqli_fetch_assoc($result)) {
+              if ($row["password"] != $_POST["contrasena"]) {
+                header("Location: login.php?fail");
+                exit();
+              }
+              session_start();
+              $_SESSION["usuario"] = $row["usuario"];
+              $_SESSION["rol"] = "Admin";
+              header("Location: ../admin/admin.php");
+            }
           }
-          session_start();
-          $_SESSION["usuario"] = $row["usuario"];
-          $_SESSION["rol"] = "Admin";
-          header("Location: ../admin/admin.php");
+        } else {
+          header("Location: login.php?fail");
+          exit();
         }
+        mysqli_stmt_close($stmt);
+      } catch (Exception $e) {
+        return null;
       }
-    } else {
-      header("Location: login.php?fail");
-      exit();
+    } else if ($_POST['accion'] == "register" && !(empty($_POST["correo"]) || empty($_POST["contrasena"]))) {
+
+      $nombre = $_POST["nombre"];
+      $apellido = $_POST["apellido"];
+      $telefono = $_POST["telefono"];
+      // $direccion = $_POST["direccion"];
+      $correo = $_POST["correo"];
+      $password = $_POST["contrasena"];
+
+
+      try {
+        $query = "INSERT INTO `credenciales`( `usuario`, `password`, `rol`) VALUES (?,?,2)";
+        $stmt = mysqli_prepare($con, $query);
+        if (!$stmt) {
+          throw new Exception('Error en la conexión o preparación de la consulta.');
+        }
+        mysqli_stmt_bind_param($stmt, "ss", $correo, $password);
+        mysqli_stmt_execute($stmt);
+
+        $id = mysqli_insert_id($con);
+
+        if ($id) {
+          $query = "INSERT INTO `cliente`( `Nombre`, `Apellido`, `Email`, `Telefono`, `Direccion`, `Fecha_Registro`, `Historial_Contrataciones`, `idcredenciales`) 
+                    VALUES (?,?,?,?,'',CURRENT_TIMESTAMP(),'',$id)";
+          $stmt = mysqli_prepare($con, $query);
+          if (!$stmt) {
+            throw new Exception('Error en la conexión o preparación de la consulta.');
+          }
+          mysqli_stmt_bind_param($stmt, "ssss", $nombre, $apellido, $correo, $telefono);
+          $result = mysqli_stmt_execute($stmt);
+
+          if ($result) {
+            header("Location: login.php?created=true");
+          } else {
+            header("Location: login.php?fail");
+          }
+        } else {
+          header("Location: login.php?fail");
+        }
+
+        mysqli_stmt_close($stmt);
+      } catch (Exception $e) {
+        header("Location: login.php?fail");
+      }
     }
-    mysqli_stmt_close($stmt);
-  } catch (Exception $e) {
-    return null;
   }
 }
 ?>
-
 <!DOCTYPE html>
-<html lang="es">
+<html>
 
 <head>
   <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Login - Ramos Drywall</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-
-  <link rel="stylesheet" href="../../estilos/login.css">
-  <link rel="shortcut icon" href="../../imagenes/logo.jpg" type="image/x-icon" />
+  <title>FORMULARIO DE REGISTRO E INICIO SESIÓN</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet">
+  <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+  <link rel="stylesheet" href="../../estilos/landing/login.css">
+  <link rel="shortcut icon" href="../../imagenes/landing/logo.jpg" type="image/x-icon">
 </head>
 
 <body>
-  <header>
-    <a href="index.php">
-      <img src="../../imagenes/logo.jpg" alt="Imagen de la constructora" />
-    </a>
-    <h1>Constructora Ramos Drywall</h1>
-    <nav>
-      <ul>
-        <li><a href="index.php">Inicio</a></li>
-        <li><a href="servicios.html">Servicios</a></li>
-        <li><a href="proyectos.html">Proyectos</a></li>
-        <li><a href="contacto.html">Contacto</a></li>
-        <li><a href="inventario.html">Inventario</a></li>
-        <li><a href="login.php">Login</a></li>
-      </ul>
-    </nav>
-  </header>
   <main>
-    <div>
-      <?php
-      if (isset($_GET["created"]))
-        echo '<div class="success-message">Cuenta creada exitosamente!</div>';
-      ?>
-      <?php
-      if (isset($_GET["fail"]))
-        echo '<div class="error-message">Error: Credenciales incorrectas!</div>';
-      ?><form action="login.php" method="post" id="loginForm">
-        <!-- Email input -->
-        <div class="form-outline mb-4">
-          <input type="email" id="email" class="form-control" name="email" />
-          <label class="form-label" for="form2Example1">Email</label>
-        </div>
-
-        <!-- Password input -->
-        <div class="form-outline mb-4">
-          <input type="password" id="password" class="form-control" name="password" />
-          <label class="form-label" for="form2Example2">Constraseña</label>
-        </div>
-
-        <!-- 2 column grid layout for inline styling -->
-        <div class="row mb-4">
-          <div class="col d-flex justify-content-center">
-            <!-- Checkbox -->
-            <div class="form-check">
-              <input class="form-check-input" type="checkbox" value="" id="form2Example34" checked />
-              <label class="form-check-label" for="form2Example34"> Recuerdame</label>
-            </div>
-          </div>
-
-          <div class="col">
-            <!-- Simple link -->
-            <a href="registro.php">Registrate aqui!</a>
+    <div style="background: position 10px;">
+      <div class="container-form register">
+        <div class="information">
+          <div class="info-childs">
+            <h2>Bienvenido</h2>
+            <p>Para unirte a nuestra comunidad por favor Inicia Sesión con tus datos</p>
+            <input type="button" value="Iniciar Sesión" id="sign-in">
           </div>
         </div>
+        <div class="form-information">
+          <div class="form-information-childs">
+            <h2>Crear una Cuenta</h2>
+            <p> Usa tu email para registrarte</p>
+            <form action="login.php" class="form form-register" method="post" enctype="multipart/form-data">
+              <div>
+                <label for="nombre">
+                  <i class='bx bx-user'></i>
+                  <input type="text" placeholder="Nombre" name="nombre">
+                </label>
+              </div>
+              <div>
+                <label for="apellido">
+                  <i class='bx bx-user'></i>
+                  <input type="text" placeholder="Apellido" name="apellido">
+                </label>
+              </div>
+              <div>
+                <label for="telefono">
+                  <i class='bx bx-phone'></i>
+                  <input type="tel" placeholder="Número de Teléfono" name="telefono" pattern="[9][0-9]{8}" required>
+                </label>
+              </div>
+              <div>
+                <label for="correo">
+                  <i class='bx bx-envelope'></i>
+                  <input type="email" placeholder="Correo Electronico" name="correo" required>
+                </label>
+              </div>
+              <div>
+                <label for="contrasena">
+                  <i class='bx bx-lock-alt'></i>
+                  <input type="password" placeholder="Contraseña" name="contrasena" required>
+                </label>
+              </div>
+              <button class="form-button-post" name="accion" value="register" type="submit">Registrarse</button>
+              <div class="alerta-error">Todos los campos son obligatorios</div>
+              <?php
+              if (isset($_GET["created"]) && $_GET["created"] == true) { ?>
+                <div class="alertSuccess">Te registraste correctamente</div>
+              <?php } ?>
+            </form>
+          </div>
+        </div>
+      </div>
 
-        <!-- Submit button -->
-        <button type="submit" class="btn btn-primary btn-block mb-4">Iniciar sesión</button>
 
+      <div class="container-form login hide">
+        <div class="information">
+          <div class="info-childs">
+            <h2>¡¡Bienvenido nuevamente!!</h2>
+            <p>Para unirte a nuestra comunidad por favor Inicia Sesión con tus datos</p>
+            <input type="button" value="Registrarse" id="sign-up">
+          </div>
+        </div>
+        <div class="form-information">
+          <div class="form-information-childs">
+            <h2>Iniciar Sesión</h2>
+            <form action="login.php" class="form form-login" method="POST" novalidate>
+              <div>
+                <label>
+                  <i class='bx bx-envelope'></i>
+                  <input type="email" placeholder="Correo Electronico" name="correo">
+                </label>
+              </div>
+              <div>
+                <label>
+                  <i class='bx bx-lock-alt'></i>
+                  <input type="password" placeholder="Contrasena" name="contrasena">
+                </label>
+              </div>
+              <button class="form-button-post" name="accion" value="login" type="submit">Iniciar Sesión</button>
+              <div class="alerta-error">Todos los campos son obligatorios</div>
+              <div class="alerta-exito">Iniciaste sesión correctamente</div>
+            </form>
+          </div>
+        </div>
+      </div>
 
-      </form>
-    </div>
-  </main>
-  <footer>
-    <p>&copy; 2024 Constructora Ramos Drywall. Todos los derechos reservados.</p>
-  </footer>
-  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
-    integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p"
-    crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
-    integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
-    crossorigin="anonymous"></script>
-
-  <!-- <script src="../../js/app.js"></script> -->
+      <a href="index.php" class="boton-casita">
+        <i class='bx bx-home'></i>
+      </a>
+      <script defer src="../../js/landing/register.js" type="module"></script>
+      <script defer src="../../js/landing/login.js"></script>
 </body>
 
 </html>

@@ -6,6 +6,15 @@ body {
   color: #333;
 }
 
+.notification-alert {
+  text-decoration: none;
+  color: inherit; /* Mantiene el color por defecto */
+}
+
+.notification-alert:hover {
+  color: white; /* Cambia el color a blanco al pasar el ratón */
+}
+
 .container {
   max-width: 900px;
   margin: 20px auto;
@@ -111,8 +120,6 @@ button:hover {
   color: black;
 }
 
-
-
 .planos-archivos {
   background-color: #f7f9fc;
   padding: 30px;
@@ -206,7 +213,8 @@ button:hover {
 }
 
 /* Estilos para las celdas y filas */
-.tabla-gastos th, .tabla-gastos td {
+.tabla-gastos th,
+.tabla-gastos td {
   padding: 10px;
   text-align: left;
   border-bottom: 1px solid #ddd;
@@ -235,7 +243,7 @@ button:hover {
 /* Estilo para la sección de Total */
 .total-container {
   display: flex;
-  justify-content: flex-end;  /* Alinea el total a la derecha */
+  justify-content: flex-end; /* Alinea el total a la derecha */
   margin-top: 20px;
   font-family: Arial, sans-serif;
   font-size: 16px;
@@ -250,7 +258,7 @@ button:hover {
 
 /* Estilo para el monto total */
 .total-amount {
-  color: red;  /* Puedes cambiar el color según tu preferencia */
+  color: red; /* Puedes cambiar el color según tu preferencia */
 }
 
 @media (max-width: 850px) {

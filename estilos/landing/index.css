@@ -1,0 +1,174 @@
+/* General */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+h2, h5 {
+    font-family: 'Poppins', sans-serif;
+    font-weight: bold;
+}
+
+/* Navbar */
+.navbar {
+    transition: background-color 0.3s, top 0.3s;
+}
+
+.navbar.bg-transparent {
+    background-color: transparent;
+}
+
+.navbar.bg-light {
+    background-color: #f8f9fa;
+}
+
+.navbar.hide {
+    top: -100px;
+}
+
+/* Hero Section */
+#hero .carousel-inner img {
+    height: 100vh;
+    object-fit: cover;
+}
+
+#hero .carousel-caption {
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 5px;
+    padding: 15px;
+}
+
+/* Visión y Misión */
+#vision-mision .card {
+    border: none;
+    background: #f8f9fa;
+    border-radius: 10px;
+    transition: transform 0.3s;
+}
+
+#vision-mision .card:hover {
+    transform: scale(1.05);
+}
+
+/* Proyectos Section */
+#proyectos h2 {
+    font-weight: bold;
+}
+
+#proyectos img {
+    max-width: 100%;
+    border-radius: 10px;
+}
+
+/* Fondo para la sección del contador */
+#overlay {
+    position: relative;
+    padding: 130px 0;
+    color: #fff; /* Asegura que el texto sea visible */
+    background: url('https://images.pexels.com/photos/416405/pexels-photo-416405.jpeg') no-repeat center center;
+    background-size: cover;
+}
+
+#overlay .background-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    background: rgba(0, 0, 0, 0.5); /* Efecto de oscurecimiento */
+}
+
+#overlay .container {
+    position: relative;
+    margin: 10px 30px;
+    z-index: 2;
+}
+
+/* Estilo para los contadores */
+#overlay .counter h6 {
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin: 10px 0;
+    color: #f8f9fa; /* Asegura el contraste */
+    transition: transform 0.3s ease;
+}
+
+#overlay .counter h6:hover {
+    transform: scale(1.1); /* Aumenta ligeramente al pasar el ratón */
+}
+
+#overlay .counter p {
+    font-size: 1rem;
+    color: #e3e3e3;
+}
+
+
+/* Animaciones y efectos */
+.counter h6 {
+    font-family: 'Poppins', sans-serif;
+    font-weight: bold;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.carousel-caption {
+    animation: fadeIn 2s ease-in;
+}
+
+/* Footer */
+.footer {
+    position: relative;
+    padding: 20px 0;
+    background: #212529; /* Fondo oscuro */
+    color: #e3e3e3; /* Texto claro */
+}
+
+.footer h5 {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.2rem;
+    margin-bottom: 15px;
+}
+
+.footer ul {
+    padding: 0;
+    list-style: none;
+}
+
+.footer ul li {
+    margin-bottom: 10px;
+    font-size: 0.9rem;
+}
+
+.footer ul li a {
+    color: #e3e3e3;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.footer ul li a:hover {
+    color: #f8f9fa;
+}
+
+.footer .fab, .footer .fas {
+    font-size: 1.5rem;
+    transition: transform 0.3s ease;
+}
+
+.footer .fab:hover, .footer .fas:hover {
+    transform: scale(1.2);
+    color: #f8f9fa;
+}
+
+.footer p {
+    margin: 30;
+    font-size: 0.9rem;
+}

@@ -5,37 +5,33 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Servicio - Ramos Drywall</title>
-    <link rel="stylesheet" href="../../estilos/estilo.css">
-    <link rel="shortcut icon" href="../../imagenes/logo.jpg" type="image/x-icon" />
+    <link rel="stylesheet" href="../../estilos/landing/servicios.css">
+    <link rel="shortcut icon" href="../../imagenes/landing/logo.jpg" type="image/x-icon" />
 </head>
 
 <body>
     <header>
-
-        <a href="index.php">
-            <img src="../../imagenes/logo.jpg" alt="Imagen de la constructora" />
+        <a class="navbar-brand" href="../index.php">
+            <img src="../../imagenes/landing/logo.jpg" width="30" height="30" class="d-inline-block align-top" alt="">
+            Ramos Drywall
         </a>
-
-        <h1>Constructora Ramos Drywall</h1>
         <nav>
             <ul>
                 <li><a href="index.php">Inicio</a></li>
                 <li><a href="servicios.html">Servicios</a></li>
                 <li><a href="proyectos.html">Proyectos</a></li>
                 <li><a href="contacto.html">Contacto</a></li>
-                <li><a href="inventario.html">Inventario</a></li>
                 <li><a href="login.php">Login</a></li>
             </ul>
         </nav>
     </header>
 
-
     <main>
         <section id="servicios" class="content">
-            <h2>Nuestros Servicios</h2>
+            <h2>NUESTROS SERVICIOS</h2>
             <div class="services-grid">
                 <div class="service-item">
-                    <img src="../../imagenes/instalaciondrywall.jpeg" alt="Instalación de Drywall">
+                    <img src="../../imagenes/landing/instalaciondrywall.jpeg" alt="Instalación de Drywall">
                     <h3>Instalación de Drywall</h3>
                     <p>Expertos en la instalación y reparación de paneles de yeso para interiores y exteriores.</p>
                 </div>
@@ -52,14 +48,40 @@
                     <h3>Remodelaciones</h3>
                     <p>Transformamos y mejoramos tus espacios para que se adapten a tus necesidades y gustos.</p>
                 </div>
+                <div class="service-item">
+                    <img src="https://www.recessedlightingoc.com/wp-content/uploads/2018/03/recessed-lighting-installation-orange-county-ca-6.jpg"
+                        alt="Instalación de Drywall">
+                    <h3>Cielos Rasos:</h3>
+                    <p>Expertos en la instalación de cielos rasos de drywall ofreciendo una gran variedad de diseños y
+                        acabados, desde
+                        lo más simple hasta los más complejos con molduras y niveles. Además, permitiendo integrar
+                        sistemas
+                        de
+                        iluminación y ventilación.</p>
+                </div>
+                <div class="service-item">
+                    <img src="https://elephantmaterials.com/wp-content/uploads/2022/10/drywall-insulation-COVER.jpg"
+                        alt="Servicios de Pintura">
+                    <h3>Aislamiento Térmico y Acústico</h3>
+                    <p>Somos expertos proporcionando un excelente aislamiento térmico y acústico.
+                        Creando ambientes más confortables y reduciendo el ruido exterior.</p>
+                </div>
+                <div class="service-item">
+                    <img src="https://img.freepik.com/premium-photo/workers-installing-drywall-newly-built-office-space-commercial-development_980129-4707.jpg?w=1060"
+                        alt="Remodelaciones">
+                    <h3>Diseño y Construcción de Espacios Comerciales</h3>
+                    <p>Lideres en adaptar los diferentes requerimientos del diseño de espacios
+                        comerciales. Creamos oficinas, tiendas, restaurantes y otros establecimientos.</p>
+                </div>
             </div>
+            <button id="ver-mas-servicios">Ver más servicios</button>
         </section>
-
     </main>
 
     <footer>
         <p>&copy; 2024 Constructora Ramos Drywall. Todos los derechos reservados.</p>
     </footer>
-</body>
+
+    <script src="../../js/landing/servicios.js"></script>
 
 </html>

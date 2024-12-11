@@ -6,6 +6,14 @@ body {
   color: #333;
   display: flex;
 }
+.notification-alert {
+  text-decoration: none;
+  color: inherit; /* Mantiene el color por defecto */
+}
+
+.notification-alert:hover {
+  color: white; /* Cambia el color a blanco al pasar el ratón */
+}
 
 /* Sidebar */
 .sidebar {

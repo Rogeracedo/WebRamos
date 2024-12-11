@@ -13,6 +13,7 @@ if (!isset($_SESSION["rol"]) ||  $_SESSION["rol"] != "Admin") {
     <title>Reportes - Panel de Administración</title>
     <link rel="stylesheet" href="../../estilos/estilosadmin/styles.css">
     <link rel="stylesheet" href="../../estilos/estilosadmin/reportes.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
 </head>
 
 <body>

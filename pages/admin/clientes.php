@@ -37,6 +37,7 @@ try {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Clientes - Panel de Administración</title>
     <link rel="stylesheet" href="../../estilos/estilosadmin/styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../../estilos/estilosadmin/clientes.css">
 </head>
 
@@ -106,7 +107,7 @@ try {
     <!-- <script src="../../estilos/jsadmin/clientes.js"></script> -->
     <script defer>
         function abrirDetalle() {
-            window.location= "proyectos.php";
+            window.location = "proyectos.php";
         }
     </script>
 </body>
